@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classification", "ML.NET\Classification.csproj", "{A567ECF8-7151-4BBC-8AC7-C0BE4DFB5B7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryClassification", "ML.NET\BinaryClassification.csproj", "{A567ECF8-7151-4BBC-8AC7-C0BE4DFB5B7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiClassClassification", "MultiClassClassification\MultiClassClassification.csproj", "{67C55DC6-5319-44B8-A770-D8DDD255C650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{A567ECF8-7151-4BBC-8AC7-C0BE4DFB5B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A567ECF8-7151-4BBC-8AC7-C0BE4DFB5B7A}.Release|x64.ActiveCfg = Release|x64
 		{A567ECF8-7151-4BBC-8AC7-C0BE4DFB5B7A}.Release|x64.Build.0 = Release|x64
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Debug|x64.ActiveCfg = Debug|x64
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Debug|x64.Build.0 = Debug|x64
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Release|x64.ActiveCfg = Release|Any CPU
+		{67C55DC6-5319-44B8-A770-D8DDD255C650}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

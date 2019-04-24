@@ -9,10 +9,10 @@ using Microsoft.ML.Trainers;
 //using Microsoft.ML.Transforms.Text;
 using ML.NET;
 
-namespace Classification
+namespace BinaryClassification
 {
     class Program
-    {
+    { 
         static readonly string _dataPath = Path.Combine(Environment.CurrentDirectory, "Data", "yelp_labelled.txt");
         static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Data", "Model.zip");
         public static TrainCatalogBase.TrainTestData LoadData(MLContext mlContext)
