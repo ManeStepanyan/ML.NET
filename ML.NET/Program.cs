@@ -19,8 +19,8 @@ namespace Classification
         {
             IDataView dataView = mlContext.Data.LoadFromTextFile<SentimentData>(_dataPath, hasHeader: false);
             TrainCatalogBase.TrainTestData splitDataView = mlContext.BinaryClassification.TrainTestSplit(dataView, testFraction: 0.2);
-            return splitDataView;        
-
+              return splitDataView;
+            
         }
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView splitTrainSet)
         {
@@ -57,15 +57,17 @@ namespace Classification
             TrainCatalogBase.TrainTestData splitDataView = LoadData(mlContext);
             ITransformer model = BuildAndTrainModel(mlContext, splitDataView.TrainSet);
             Evaluate(mlContext, model, splitDataView.TestSet);
-            UseModelWithSingleItem(mlContext, model);
+           // UseModelWithSingleItem(mlContext, model);
+            UseModelWithBatchItems(mlContext, model);
             Console.ReadLine();
-
+           
 
         }
 
         private static void UseModelWithSingleItem(MLContext mlContext, ITransformer model)
         {
             PredictionEngine<SentimentData, SentimentPrediction> predictionFunction = model.CreatePredictionEngine<SentimentData, SentimentPrediction>(mlContext);
+            // The Predict() function makes a prediction on a single row of data.
             var res = predictionFunction.Predict(new SentimentData() { SentimentText = "This was a very bad steak" });
             Console.WriteLine("=============== Prediction Test of model with a single sample and test dataset ===============");
             
@@ -75,6 +77,37 @@ namespace Classification
             Console.WriteLine("=============== End of Predictions ===============");
             Console.WriteLine();
 
+        }
+        public static void UseModelWithBatchItems(MLContext mlContext, ITransformer model)
+        {
+            IEnumerable<SentimentData> sentiments = new[]
+        {
+            new SentimentData
+            {
+            SentimentText = "This was a horrible meal"
+            },
+            new SentimentData
+            {
+            SentimentText = "I love this spaghetti."
+            }
+        };
+            IDataView batchComments = mlContext.Data.LoadFromEnumerable(sentiments);
+
+            IDataView predictions = model.Transform(batchComments);
+
+            // Use model to predict whether comment data is Positive (1) or Negative (0).
+            IEnumerable<SentimentPrediction> predictedResults = mlContext.Data.CreateEnumerable<SentimentPrediction>(predictions, reuseRowObject: false);
+            Console.WriteLine();
+
+            Console.WriteLine("=============== Prediction Test of loaded model with multiple samples ===============");
+            // merging
+            IEnumerable<(SentimentData sentiment, SentimentPrediction prediction)> sentimentsAndPredictions = sentiments.Zip(predictedResults, (sentiment, prediction) => (sentiment, prediction));
+            foreach ((SentimentData sentiment, SentimentPrediction prediction) item in sentimentsAndPredictions)
+            {
+                Console.WriteLine($"Sentiment: {item.sentiment.SentimentText} | Prediction: {(Convert.ToBoolean(item.prediction.Prediction) ? "Positive" : "Negative")} | Probability: {item.prediction.Probability} ");
+
+            }
+            Console.WriteLine("=============== End of predictions ===============");
         }
     }
 }
